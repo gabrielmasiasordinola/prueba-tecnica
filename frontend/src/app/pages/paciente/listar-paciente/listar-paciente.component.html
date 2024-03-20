@@ -1,0 +1,128 @@
+<div class="col-12 p-0 m-0 bg-white" align="center">
+  <div class="col-12 p-0 p-md-3 m-0" align="center">
+    <div class="col-md-10 col-sm-12 p-0 d-hide-sm m-0 mb-2">
+      <div class="d-inline-block float-right d-flex">
+        <span class="h5">
+          Lista de pacientes
+        </span>
+      </div>
+    </div>
+    <div class="col-sm-12 d-block col-md-10 mb-3" align="justify">
+      <div class="d-inline-block float-right d-flex">
+        <div class="d-flex mx-2">
+          <span class="h6">
+          Buscar por
+          </span>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="form-check form-switch">
+            <input class="form-check-input mx-1" type="checkbox"
+                   role="switch"
+                   id="flexCheckDefault1"
+                   (change)="toggleTypeDocument()"
+            >
+            <div *ngIf="optinons.onlyDocuments" class="d-flex">
+              <label class="form-check-label" for="flexCheckDefault1">
+                Tipo y numero de documento
+              </label>
+            </div>
+            <div *ngIf="optinons.onlyFullname" class="d-flex">
+              <label class="form-check-label" for="flexCheckDefault1">
+                Apellidos y Nombres
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="formGroup" (ngSubmit)="buscar()">
+        <div class="d-flex flex-column" align="center">
+
+          <div *ngIf="optinons.onlyDocuments" class="text-center input-group">
+            <label class="input-group-text" for="inputGroupSelect02">Tipo Documento</label>
+            <select class="form-select form-select-sm" id="inputGroupSelect02"
+                    formControlName="tipoDocumento"
+                    (change)="seleccionarTipoDocumento($event.target)">
+              <option *ngFor="let item of listaDocumentos" [value]="item.idTipoDocumentoIdentidad">
+                {{ item.descripcionTipoDocumentoIdentidad }}
+              </option>
+            </select>
+            <label class="input-group-text" for="inputGroupSelect02">Numero de Documento</label>
+            <input type="text" aria-label="First name" class="form-control form-control-sm"
+                   formControlName="numeroDocumento"
+                   [minlength]="nCaracteres" [max]="nCaracteres" [maxlength]="nCaracteres"
+                   placeholder="Ingrese N°. Doc">
+          </div>
+          <div *ngIf="optinons.onlyFullname" class="text-center input-group">
+            <label class="input-group-text" for="inputGroupSelect02">Apellidos</label>
+            <input type="text" aria-label="First name"
+                   class="form-control form-control-sm" formControlName="apellidos">
+            <label class="input-group-text" for="inputGroupSelect02">Nombres</label>
+            <input type="text" aria-label="First name"
+                   class="form-control form-control-sm" formControlName="nombres">
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 m-0 p-0">
+          <div class="d-flex float-end">
+            <button type="submit" class="btn btn-sm btn-outline-primary mx-2">Buscar</button>
+            <button (click)="reiniciar()" type="reset" class="btn btn-sm btn-outline-secondary">Limpiar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="d-flex">
+    <div class="d-inline-block float-right d-flex">
+        <span class="h6">
+          Pacientes
+        </span>
+    </div>
+  </div>
+  <hr>
+  <div class="d-flex mt-3">
+    <div style="max-height: 600px; overflow-y: auto; width: 100%" *ngIf="pacientes.length; else not_Data">
+      <div class="d-flex float-end">
+        <button class="btn btn-sm btn-outline-primary" (click)="goToRegistar()">Registrar pacientes</button>
+      </div>
+      <table class="table table-sm">
+        <thead>
+        <tr>
+          <th class="align-items-center align-middle">Nombre</th>
+          <th class="align-items-center align-middle">Tipo de Doc</th>
+          <th class="align-items-center align-middle">Numero de Doc</th>
+          <th class="align-items-center align-middle">Estado</th>
+          <th class="align-items-center align-middle">Editar</th>
+          <th class="align-items-center align-middle">Eliminar</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let item of pacientes">
+        <tr>
+          <td class="align-items-center align-middle">{{ item.noNombres }}</td>
+          <td class="align-items-center align-middle">{{ item.idTipoDocide }}</td>
+          <td class="align-items-center align-middle">{{ item.noDocide }}</td>
+          <td class="align-items-center align-middle">item.itEstado</td>
+          <td class="align-items-center align-middle">
+            <button class="btn btn-sm" (click)="editarUsuario(item)">
+              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
+            </button>
+          </td>
+          <td class="align-items-center align-middle">
+            <button class="btn btn-sm" (click)="eliminarUsuario(item)">
+              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #not_Data>
+      <div class="d-flex">
+        <span class="text-center h6">
+          Este paciente no se encuentra registrado
+        </span>
+      </div>
+    </ng-template>
+  </div>
+</div>
+

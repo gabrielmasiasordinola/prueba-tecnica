@@ -1,0 +1,140 @@
+<div class="container d-flex" style="width: 50%">
+  <h2 class="font-weight-bolder mb-3" align="center">Registar paciente</h2>
+  <div class="form-check form-switch">
+    <input class="form-check-input mx-1" type="checkbox"
+           role="switch"
+           id="flexCheckDefault1"
+           (change)="toggleAcompanante()"/>
+    <label class="form-check-label" for="flexCheckDefault1">
+      Registrar Acompañante
+    </label>
+  </div>
+  <form [formGroup]="pacienteForm" class="d-flex flex-row">
+    <div formGroupName="datosPaciente" class="d-flex flex-column">
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Tipo Documento</div>
+        <select formControlName="tipoDocumento" class="form-select form-select-sm custom-select text-argument">
+          <option *ngFor="let item of listaDocumentos"
+                  [value]="item.idTipoDocumentoIdentidad"
+          >
+            {{ item.descripcionTipoDocumentoIdentidad }}
+          </option>
+        </select>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Nº Documento</div>
+        <input class="form-control form-control-sm" type="text" formControlName="numeroDocumento">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Apellido Paterno</div>
+        <input class="form-control form-control-sm" type="text" formControlName="apellidoPaterno">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Apellido Materno</div>
+        <input class="form-control form-control-sm" type="text" formControlName="apellidoMaterno">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Nombres</div>
+        <input class="form-control form-control-sm" type="text" formControlName="nombres">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Sexo</div>
+        <select formControlName="sexo" class="form-select form-select-sm custom-select text-argument">
+          <option *ngFor="let item of listaSexo"
+                  [value]="item.idSexo"
+          >
+            {{ item.descripcionSexo }}
+          </option>
+        </select>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Fecha Nacimiento</div>
+        <input class="form-control form-control-sm" type="date" formControlName="fechaNacimiento">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Edad</div>
+        <input class="form-control form-control-sm" type="text" formControlName="edad" readonly>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Lugar de Nacimiento</div>
+        <input class="form-control form-control-sm" type="text" formControlName="lugarNacimiento" readonly>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Direccion</div>
+        <input class="form-control form-control-sm" type="text" formControlName="direccion" readonly>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Departamento</div>
+        <select formControlName="departamento"
+                class="form-select form-select-sm custom-select text-argument"
+                (change)="fetchProvincias()">
+          <option *ngFor="let item of listaDepartamentos"
+                  [value]="item.codigoDepartamento"
+          >
+            {{ item.descripcionDepartamento }}
+          </option>
+        </select>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Provincia</div>
+        <select formControlName="departamento"
+                class="form-select form-select-sm custom-select text-argument"
+                (change)="fetchDistritos()">
+          <option *ngFor="let item of listaProvincias"
+                  [value]="item.codigoProvincia"
+          >
+            {{ item.descripcionProvincia }}
+          </option>
+        </select>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Distrito</div>
+        <select formControlName="departamento"
+                class="form-select form-select-sm custom-select text-argument"
+                (change)="fetchDistritos()">
+          <option *ngFor="let item of listaDistritos"
+                  [value]="item.codigoDistrito"
+          >
+            {{ item.descripcionDistrito }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div formGroupName="datosAcompanante" class="d-flex flex-column" *ngIf="acompapante">
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Tipo Documento</div>
+        <select formControlName="tipoDocumento" class="form-select form-select-sm custom-select text-argument">
+          <option *ngFor="let item of listaDocumentos"
+                  [value]="item.idTipoDocumentoIdentidad"
+          >
+            {{ item.descripcionTipoDocumentoIdentidad }}
+          </option>
+        </select>
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Nº Documento</div>
+        <input class="form-control form-control-sm" type="text" formControlName="numeroDocumento">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Apellido Paterno</div>
+        <input class="form-control form-control-sm" type="text" formControlName="apellidoPaterno">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Apellido Materno</div>
+        <input class="form-control form-control-sm" type="text" formControlName="apellidoMaterno">
+      </div>
+      <div class="card alert-secondary d-flex justify-content-between p-2 mt-1">
+        <div class="small cont-weight-normal d-block">Nombres</div>
+        <input class="form-control form-control-sm" type="text" formControlName="nombres">
+      </div>
+    </div>
+  </form>
+  <div align="center" class="mt-2">
+    <button type="submit" class="btn btn-primary mr-2" (click)="onSubmit()">
+      Guardar
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancelar</button>
+  </div>
+
+</div>
